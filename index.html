@@ -204,7 +204,7 @@
     }
     .whatsapp-float:hover { transform: scale(1.1); }
 
-    /* تنسيقات مساعد الذكاء الاصطناعي (عبدالباري القردوع) */
+    /* تنسيقات مساعد الذكاء الاصطناعي العائم (عبدالباري القردوع) في الأسفل */
     #ebda3-ai-widget {
       position: fixed;
       bottom: 95px;
@@ -386,7 +386,7 @@
 </head>
 <body>
 
-  <!-- الهيدر الرئيسي مع الشعار -->
+  <!-- الهيدر الرئيسي مع الشعار (تمت إزالة رابط المساعد من هنا) -->
   <header class="header-nav">
     <div class="brand-container">
       <img src="images/الشعار.jpg" alt="شعار إبداع سوفت" class="brand-logo">
@@ -400,7 +400,6 @@
       <a href="#about">من نحن</a>
       <a href="#systems">أنظمتنا</a>
       <a href="#contact">تواصل معنا</a>
-      <a href="assistant.html">🤖 المساعد الذكي</a>
       <a href="admin.html">لوحة الإدارة</a>
     </nav>
     <div class="nav-buttons">
@@ -656,7 +655,7 @@
   <!-- زر الواتساب العائم -->
   <a href="https://wa.me/967776724021" class="whatsapp-float" target="_blank" title="تواصل مباشر عبر واتساب">💬</a>
 
-  <!-- مساعد الذكاء الاصطناعي العائم: عبدالباري القردوع -->
+  <!-- مساعد الذكاء الاصطناعي العائم (عبدالباري القردوع) في الأسفل -->
   <div id="ebda3-ai-widget">
     <button id="ai-chat-toggle-btn" aria-label="مساعد إبداع سوفت">🤖</button>
 
@@ -761,7 +760,7 @@
                `1. الدخول إلى نظام <strong>المخازن والمستودعات</strong>.<br>` +
                `2. اختيار <strong>تهيئة المخازن</strong> وإضافة المخزن الرئيسي أو الفروع.<br>` +
                `3. الانتقال إلى شاشة <strong>مجموعات الأصناف</strong> لتصنيف البضائع.<br>` +
-               `4. إدخال بيانات الصنف، وحدة القيصر، وسعر البيع الافتراضي ثم الحفظ.`;
+               `4. إدخال بيانات الصنف، وحدة القياس، وسعر البيع الافتراضي ثم الحفظ.`;
       }
       else if (text.includes('قيد') || text.includes('قيود') || text.includes('سند')) {
         return `<strong>خطوات إدخال السندات والقيود المحاسبية:</strong><br>` +
@@ -772,11 +771,11 @@
                `5. الضغط على <strong>ترحيل وحفظ</strong>.`;
       }
       else if (text.includes('دوت اكس') || text.includes('dotx')) {
-        return `<strong>نظام دوت اكس برو (DotX Pro):</strong>[cite: 1]<br>` +
-               `هو نظام محاسبي وإداري شامل متعدد الفروع[cite: 1]. يتميز بـ 85 ميزة متقدمة وصلاحيات مرنة وتقارير مالية لحظية. هل ترغب بشرح تهيئة دليل الحسابات أو ربط الفروع فيه؟`;
+        return `<strong>نظام دوت اكس برو (DotX Pro):</strong><br>` +
+               `هو نظام محاسبي وإداري شامل متعدد الفروع. يتميز بـ 85 ميزة متقدمة وصلاحيات مرنة وتقارير مالية لحظية. هل ترغب بشرح تهيئة دليل الحسابات أو ربط الفروع فيه؟`;
       }
       else if (text.includes('سعر') || text.includes('تواصل') || text.includes('رقم') || text.includes('دعم')) {
-        return `للحصول على الدعم الفني المباشر، عروض الأسعار، أو الترتيب للنزول الميداني في فرع الحديدة، تواصل معنا فوراً عبر زر الواتساب العائم أو الرقم <strong>776724021</strong>[cite: 1].`;
+        return `للحصول على الدعم الفني المباشر، عروض الأسعار، أو الترتيب للنزول الميداني في فرع الحديدة، تواصل معنا فوراً عبر زر الواتساب العائم أو الرقم <strong>776724021</strong>.`;
       }
       else {
         return `أهلاً بك! بصفتي <strong>عبدالباري القردوع</strong>، يمكنني إرشادك في خطوات تهيئة الأنظمة (مثل: دليل الحسابات، المخازن، القيود والسندات). اكتب استفسارك بوضوح (مثلاً: "كيف أعرف تهيئة الحسابات؟") وسأعطيك الخطوات بالتفصيل!`;
@@ -787,7 +786,6 @@
       const text = userInput.value.trim();
       if (!text) return;
 
-      // إضافة رسالة المستخدم للمحادثة
       const userMsg = document.createElement('div');
       userMsg.className = 'ai-message ai-user-message';
       userMsg.textContent = text;
@@ -795,7 +793,6 @@
       userInput.value = '';
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
-      // توليد رد المساعد الذكي بعد ثانية
       setTimeout(() => {
         const botMsg = document.createElement('div');
         botMsg.className = 'ai-message ai-bot-message';
@@ -810,6 +807,6 @@
       if (e.key === 'Enter') handleSendMessage();
     });
   </script>
-<script src="chatbot.js"></script>
+  <script src="chatbot.js"></script>
 </body>
 </html>
