@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إبداع سوفت للأنظمة الخاصة - فرع الحديدة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #121824;
+      --card-bg: #1e2638;
+      --card-border: #2e3a52;
+      --primary: #00b887;
+      --primary-hover: #00966d;
+      --secondary: #00b2e3;
+      --text-main: #f0f4f8;
+      --text-muted: #a0aec0;
+      --accent-yellow: #ffb703;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+
+    /* شريط الإعلانات المتنقل */
+    .announcement-bar {
+      background: linear-gradient(90deg, #1d2a44, #0f172a);
+      border-bottom: 1px solid var(--card-border);
+      color: #fff;
+      padding: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+    .announcement-content {
+      display: inline-block;
+      padding-right: 100%;
+      animation: marquee 35s linear infinite;
+      font-size: 14px;
+    }
+    @keyframes marquee {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(100%, 0); }
+    }
+
+    /* الهيدر وشريط التنقل */
+    .header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background-color: rgba(30, 38, 56, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .brand-title { font-size: 20px; font-weight: 800; color: var(--primary); text-decoration: none; }
+    .brand-subtitle { font-size: 12px; color: var(--text-muted); display: block; }
+
+    .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+    .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 500; font-size: 15px; transition: 0.3s; }
+    .nav-links a:hover { color: var(--primary); }
+
+    .nav-buttons { display: flex; gap: 10px; }
+    .btn-contact {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-contact:hover { background-color: var(--primary-hover); }
+
+    /* الهيرو (قسم الواجهة الرئيسي) */
+    .hero-section {
+      padding: 80px 20px;
+      background: radial-gradient(circle at center, #1e2d42 0%, var(--bg-dark) 70%);
+      text-align: center;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .hero-section h1 { font-size: 40px; font-weight: 800; color: #fff; margin-bottom: 15px; }
+    .hero-section p { font-size: 18px; color: var(--text-muted); max-width: 800px; margin: 0 auto 30px; line-height: 1.8; }
+    
+    .hero-features {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 35px;
+    }
+    .hero-feature-badge {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 8px 18px;
+      border-radius: 8px;
+      color: var(--accent-yellow);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .hero-stats { font-size: 20px; color: var(--accent-yellow); font-weight: 700; margin-bottom: 25px; }
+
+    /* شبكة الأنظمة */
+    .systems-section {
+      max-width: 1250px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+    .section-header { text-align: center; margin-bottom: 40px; }
+    .section-title {
+      font-size: 28px;
+      color: #fff;
+      margin-bottom: 10px;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px;
+      display: inline-block;
+    }
+    .section-header p { color: var(--text-muted); font-size: 15px; }
+
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+    .system-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 25px;
+      text-align: right;
+      transition: 0.3s;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .system-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .system-card h3 { color: #fff; font-size: 20px; margin-bottom: 10px; }
+    .system-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; line-height: 1.6; flex-grow: 1; }
+    
+    .card-meta { display: flex; gap: 12px; font-size: 13px; color: var(--accent-yellow); margin-bottom: 15px; font-weight: 600; }
+    .card-link-btn {
+      background: rgba(0, 184, 135, 0.1);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      text-align: center;
+      transition: 0.3s;
+      display: block;
+    }
+    .system-card:hover .card-link-btn { background: var(--primary); color: #fff; }
+
+    /* قسم تواصل معنا */
+    .contact-section {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 40px;
+      background: linear-gradient(135deg, #1e2a3a, #111827);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      text-align: center;
+    }
+    .contact-section h2 { font-size: 26px; color: #fff; margin-bottom: 10px; }
+    .contact-section p { color: var(--text-muted); margin-bottom: 25px; }
+    .contact-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+      text-align: right;
+    }
+    .contact-box { background: var(--card-bg); padding: 20px; border-radius: 10px; border: 1px solid var(--card-border); }
+    .contact-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 16px; }
+    .contact-box p { color: var(--text-muted); font-size: 14px; margin: 0; }
+
+    /* زر الواتساب العائم */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background-color: #25d366;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      z-index: 1000;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    /* التذييل Footer */
+    footer {
+      background-color: #0b0f17;
+      padding: 60px 40px 20px;
+      border-top: 1px solid var(--card-border);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      max-width: 1300px;
+      margin: 0 auto 40px;
+    }
+    .footer-col h4 { color: var(--primary); margin-bottom: 15px; font-size: 18px; }
+    .footer-col p, .footer-col a { color: var(--text-muted); font-size: 14px; text-decoration: none; display: block; margin-bottom: 8px; }
+    .footer-col a:hover { color: #fff; }
+
+    .copyright { text-align: center; padding-top: 20px; border-top: 1px solid var(--card-border); color: var(--text-muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+
+  <!-- شريط الإعلانات المتنقل -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      🔔 <strong>دورة تدريبية مجانية لنظام DotX Pro</strong> • خصم 50% أو مجاناً لعملاء الشركة الحصريين • 📍 الحديدة - شارع صنعاء - عمارة الحظاء • 📞 سجّل الآن عبر الرقم: 776724021 ❖
+    </div>
+  </div>
+
+  <!-- الهيدر الرئيسي -->
+  <header class="header-nav">
+    <div>
+      <a href="#" class="brand-title">إبداع سوفت</a>
+      <span class="brand-subtitle">فرع الحديدة - اليمن</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#">الرئيسية</a>
+      <a href="#about">من نحن</a>
+      <a href="#systems">أنظمتنا</a>
+      <a href="#contact">تواصل معنا</a>
+      <a href="#admin">لوحة الإدارة</a>
+    </nav>
+    <div class="nav-buttons">
+      <a href="https://wa.me/967776724021" target="_blank" class="btn-contact">💬 واتساب 776724021</a>
+    </div>
+  </header>
+
+  <!-- القسم الرئيسي (Hero) -->
+  <section class="hero-section">
+    <h1>إبداع سوفت للأنظمة الخاصة<br><span style="color: var(--primary); font-size: 30px;">فرع الحديدة - اليمن</span></h1>
+    <p>نوفّر حلولاً برمجية متكاملة في مجال المحاسبة والإدارة لكافة القطاعات التجارية والخدمية، بخبرة محلية وفريق دعم فني مستمر لضمان استقرار أعمالك.</p>
+    
+    <div class="hero-features">
+      <div class="hero-feature-badge">✓ دعم فني محلي</div>
+      <div class="hero-feature-badge">✓ أنظمة محدّثة باستمرار</div>
+    </div>
+
+    <div class="hero-stats">⭐ 16+ نظام متكامل لإدارة أعمالك</div>
+    
+    <div>
+      <a href="#systems" class="btn-contact" style="padding: 12px 28px; font-size: 16px; margin-left: 10px;">استعرض الأنظمة</a>
+      <a href="https://wa.me/967776724021?text=السلام%20عليكم،%20أرغب%20بالبدء%20والاستفسار" target="_blank" class="btn-contact" style="background: #25d366; padding: 12px 28px; font-size: 16px;">ابدأ الآن عبر واتساب</a>
+    </div>
+  </section>
+
+  <!-- شبكة الأنظمة -->
+  <section class="systems-section" id="systems">
+    <div class="section-header">
+      <h2 class="section-title">أنظمتنا البرمجية</h2>
+      <p>16 نظاماً متكاملاً لإدارة أعمالك بمجموعة شاملة من البرامج المحاسبية والإدارية الحديثة</p>
+    </div>
+    
+    <div class="systems-grid">
+      <!-- 1 -->
+      <div class="system-card">
+        <div>
+          <h3>دوت اكس برو</h3>
+          <p>نظام محاسبي وإداري شامل متعدد الفروع مع تقارير مالية دقيقة وصلاحيات مرنة.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>85 ميزة</span> • <span>4 فيديو</span></div>
+          <a href="dotxpro.html" class="card-link-btn">عرض التفاصيل</a>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="system-card">
+        <div>
+          <h3>مال المحاسبي</h3>
+          <p>نظام محاسبي مبسّط للأنشطة الصغيرة والمتوسطة يغطي القيود والمراجع والضرائب.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>60 ميزة</span> • <span>2 فيديو</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="system-card">
+        <div>
+          <h3>شركات الصرافة</h3>
+          <p>نظام متخصص لشركات الصرافة يشمل الحوالات والعملات والميزانيات اللحظية.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>70 ميزة</span> • <span>3 فيديو</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="system-card">
+        <div>
+          <h3>الصراف بلاس</h3>
+          <p>نظام صرافة متطور يدعم عمليات البيع والشراء للعملات وتتبع الأسعار.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>50 ميزة</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="system-card">
+        <div>
+          <h3>الصراف المتقدم</h3>
+          <p>إصدار مطوّر من أنظمة الصرافة مع تحليلات أعمق وتقارير أداء يومية.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>55 ميزة</span> • <span>1 فيديو</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="system-card">
+        <div>
+          <h3>معارض السيارات</h3>
+          <p>إدارة معارض السيارات من المبيعات والصيانة إلى العقود والتمويل.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>45 ميزة</span> • <span>2 فيديو</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="system-card">
+        <div>
+          <h3>التاجر المطور</h3>
+          <p>نظام نقاط بيع وإدارة مخازن متكامل مصمّم للأنشطة التجارية بمختلف أحجامها.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>65 ميزة</span> • <span>3 فيديو</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="system-card">
+        <div>
+          <h3>المستشفيات</h3>
+          <p>نظام إدارة المستشفيات والعيادات: المرضى، المواعيد، المخازن، الفواتير.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>80 ميزة</span> • <span>2 فيديو</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="system-card">
+        <div>
+          <h3>المدارس</h3>
+          <p>إدارة المدارس شاملة: الطلاب، الدرجات، الرسوم، الموظفين والجداول.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>75 ميزة</span> • <span>3 فيديو</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="system-card">
+        <div>
+          <h3>الفنادق</h3>
+          <p>نظام إدارة الفنادق: الحجوزات، الغرف، الإقامة، المطاعم والمحاسبة.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>70 ميزة</span> • <span>1 فيديو</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 11 -->
+      <div class="system-card">
+        <div>
+          <h3>محطات الكهرباء</h3>
+          <p>نظام إدارة محطات الكهرباء يشمل الاشتراكات والقراءات والفواتير الدورية.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>40 ميزة</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 12 -->
+      <div class="system-card">
+        <div>
+          <h3>محطات الوقود</h3>
+          <p>إدارة محطات الوقود: المضخات، المخزون، المناوبات والقراءات اللحظية.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>45 ميزة</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 13 -->
+      <div class="system-card">
+        <div>
+          <h3>مشاريع المياه</h3>
+          <p>نظام لمشاريع المياه يشمل الاشتراكات والقراءات والفواتير والتحصيل.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>40 ميزة</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 14 -->
+      <div class="system-card">
+        <div>
+          <h3>المطاعم</h3>
+          <p>نظام إدارة المطاعم: الطلبات، الكاشير، المطبخ، المخزون والتقارير.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>55 ميزة</span> • <span>2 فيديو</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 15 -->
+      <div class="system-card">
+        <div>
+          <h3>الموارد البشرية</h3>
+          <p>إدارة الموظفين: الحضور، الرواتب، الإجازات، التقييمات والأرشيف الإلكتروني.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>50 ميزة</span> • <span>1 فيديو</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+
+      <!-- 16 -->
+      <div class="system-card">
+        <div>
+          <h3>الأصول الثابتة</h3>
+          <p>تتبّع الأصول الثابتة وحساب الإهلاك تلقائياً مع تقارير دورية عن قيمتها.</p>
+        </div>
+        <div>
+          <div class="card-meta"><span>35 ميزة</span></div>
+          <span class="card-link-btn" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">قريباً</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- قسم تواصل معنا -->
+  <section class="contact-section" id="contact">
+    <h2>جاهزون لخدمتك في أي وقت</h2>
+    <p>فريقنا في فرع الحديدة متخصص في تقديم الحلول البرمجية المناسبة لطبيعة نشاطك. تواصل معنا اليوم للحصول على استشارة مجانية وعرض سعر مخصص.</p>
+    
+    <div class="contact-info-grid">
+      <div class="contact-box">
+        <h4>واتساب</h4>
+        <p>776724021</p>
+      </div>
+      <div class="contact-box">
+        <h4>اتصال مباشر</h4>
+        <p>776724021</p>
+      </div>
+      <div class="contact-box">
+        <h4>البريد الإلكتروني</h4>
+        <p>info@ibdaasoft.com</p>
+      </div>
+      <div class="contact-box">
+        <h4>ساعات العمل</h4>
+        <p>السبت - الخميس، ٩ ص - ٦ م</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- زر الواتساب العائم -->
+  <a href="https://wa.me/967776724021" class="whatsapp-float" target="_blank" title="تواصل مباشر عبر واتساب">💬</a>
+
+  <!-- التذييل Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>إبداع سوفت</h4>
+        <p>فرع الحديدة - اليمن</p>
+        <p>نوفّر حلولاً برمجية متكاملة في مجال المحاسبة والإدارة، بخبرة محلية وفريق دعم فني مستمر لخدمة القطاع التجاري والصناعي والخدمي.</p>
+        <p>📍 الحديدة - شارع صنعاء، عمارة الحظاء</p>
+      </div>
+      
+      <div class="footer-col">
+        <h4>الأنظمة</h4>
+        <a href="dotxpro.html">دوت اكس برو</a>
+        <a href="#">مال المحاسبي</a>
+        <a href="#">شركات الصرافة</a>
+        <a href="#">الصراف بلاس</a>
+        <a href="#">الصراف المتقدم</a>
+        <a href="#">معارض السيارات</a>
+        <a href="#">التاجر المطور</a>
+        <a href="#">المستشفيات</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <a href="#">الرئيسية</a>
+        <a href="#about">من نحن</a>
+        <a href="#contact">تواصل معنا</a>
+        <a href="#admin">لوحة الإدارة</a>
+        <a href="#">المدارس</a>
+        <a href="#">الفنادق</a>
+        <a href="#">المطاعم</a>
+        <a href="#">الموارد البشرية</a>
+      </div>
+    </div>
+
+    <div class="copyright">
+      &copy; 2026 إبداع سوفت للأنظمة الخاصة - فرع الحديدة. جميع الحقوق محفوظة. صُمّم بعناية لخدمة الأعمال اليمنية | واتساب: 776724021
+    </div>
+  </footer>
+
+</body>
+</html>

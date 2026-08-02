@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام الأصول الثابتة - إبداع سوفت فرع الحديدة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #121824;
+      --card-bg: #1e2638;
+      --card-border: #2e3a52;
+      --primary: #00b887;
+      --primary-hover: #00966d;
+      --text-main: #f0f4f8;
+      --text-muted: #a0aec0;
+      --accent-yellow: #ffb703;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+
+    /* شريط الإعلانات المتنقل */
+    .announcement-bar {
+      background: linear-gradient(90deg, #1d2a44, #0f172a);
+      border-bottom: 1px solid var(--card-border);
+      color: #fff;
+      padding: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+    .announcement-content {
+      display: inline-block;
+      padding-right: 100%;
+      animation: marquee 35s linear infinite;
+      font-size: 14px;
+    }
+    @keyframes marquee {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(100%, 0); }
+    }
+
+    /* الهيدر وشريط التنقل */
+    .header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background-color: rgba(30, 38, 56, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+    }
+    .brand-logo {
+      width: 55px;
+      height: 55px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #fff;
+      padding: 2px;
+    }
+    .brand-title { font-size: 20px; font-weight: 800; color: var(--primary); text-decoration: none; display: block; }
+    .brand-subtitle { font-size: 13px; color: var(--text-muted); display: block; font-weight: 600; }
+
+    .nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+    .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 500; font-size: 15px; transition: 0.3s; }
+    .nav-links a:hover { color: var(--primary); }
+
+    .btn-contact {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-contact:hover { background-color: var(--primary-hover); }
+
+    /* محتوى صفحة النظام */
+    .system-container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-bottom: 20px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .back-link:hover { color: var(--primary); }
+
+    .system-hero {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .system-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .system-title-area h1 { font-size: 32px; color: #fff; margin-bottom: 10px; }
+    .system-title-area p { color: var(--text-muted); font-size: 16px; }
+
+    .system-badges {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    .badge {
+      background: rgba(0, 184, 135, 0.1);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      border: 1px solid rgba(0, 184, 135, 0.2);
+    }
+
+    /* التبويبات الفرعية */
+    .tabs-nav {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: #121824;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* محتوى التبويبات */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* صندوق الوصف والبروشورات */
+    .description-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 40px;
+    }
+    .description-box h3 {
+      font-size: 22px;
+      color: #fff;
+      margin-bottom: 15px;
+      border-right: 4px solid var(--primary);
+      padding-right: 12px;
+    }
+    .description-box p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+
+    /* تنسيق شبكة البروشورات والصور */
+    .brochures-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+    .brochure-card {
+      background: #121824;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+    .brochure-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+    }
+    .brochure-img {
+      width: 100%;
+      height: 400px;
+      object-fit: contain;
+      background-color: #0b0f17;
+      display: block;
+      border-bottom: 1px solid var(--card-border);
+      cursor: pointer;
+    }
+    .brochure-title {
+      padding: 15px;
+      text-align: center;
+      font-weight: 700;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    /* شبكة المميزات */
+    .features-section { margin-bottom: 40px; }
+    .features-section h3 {
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 25px;
+      border-right: 4px solid var(--primary);
+      padding-right: 12px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 25px;
+      transition: 0.3s;
+    }
+    .feature-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+    }
+    .feature-icon { font-size: 32px; margin-bottom: 15px; display: block; }
+    .feature-card h4 { font-size: 18px; color: #fff; margin-bottom: 10px; }
+    .feature-card p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+
+    /* طلب عرض سعر */
+    .cta-box {
+      background: linear-gradient(135deg, #1e2a3a, #111827);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .cta-box h3 { font-size: 24px; color: #fff; margin-bottom: 10px; }
+    .cta-box p { color: var(--text-muted); margin-bottom: 25px; }
+
+    .btn-whatsapp-large {
+      background-color: #25d366;
+      color: #fff;
+      padding: 14px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+    .btn-whatsapp-large:hover { transform: scale(1.05); background-color: #20ba5a; }
+
+    /* زر الواتساب العائم */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background-color: #25d366;
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      z-index: 1000;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    /* التذييل Footer */
+    footer {
+      background-color: #0b0f17;
+      padding: 60px 40px 20px;
+      border-top: 1px solid var(--card-border);
+      margin-top: 60px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      max-width: 1300px;
+      margin: 0 auto 40px;
+    }
+    .footer-col h4 { color: var(--primary); margin-bottom: 15px; font-size: 18px; }
+    .footer-col p, .footer-col a { color: var(--text-muted); font-size: 14px; text-decoration: none; display: block; margin-bottom: 8px; }
+    .footer-col a:hover { color: #fff; }
+
+    .copyright { text-align: center; padding-top: 20px; border-top: 1px solid var(--card-border); color: var(--text-muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+
+  <!-- شريط الإعلانات المتنقل -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      🔔 يعلن فرع الحديدة - إبداع سوفت عن بدء التسجيل في الدورة التدريبية الاحترافية على نظام DotX Pro • 🔥 عرض خاص خلال هذا الشهر فقط: خصم 50% على رسوم الدورة التدريبية. • 🎁 الدورة مجانية بالكامل لعملاء إبداع سوفت الذين يمتلكون أحد أنظمة الشركة. • 📍 الحديدة - شارع صنعاء - جوار شركة الخولاني - عمارة الحظاء - الدور الثالث • 📞 للاستفسار والتسجيل: 776724021 ❖
+    </div>
+  </div>
+
+  <!-- الهيدر الرئيسي -->
+  <header class="header-nav">
+    <a href="ebda3soft.html" class="brand-container">
+      <img src="images/الشعار.jpg" alt="شعار إبداع سوفت" class="brand-logo">
+      <div>
+        <span class="brand-title">إبداع سوفت للأنظمة الخاصة</span>
+        <span class="brand-subtitle">فرع الحديدة</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="ebda3soft.html">الرئيسية</a>
+      <a href="ebda3soft.html#about">من نحن</a>
+      <a href="ebda3soft.html#systems">الأخبار</a>
+      <a href="ebda3soft.html#contact">تواصل معنا</a>
+      <a href="admin.html">لوحة الإدارة</a>
+    </nav>
+    <div>
+      <a href="https://wa.me/967776724021" target="_blank" class="btn-contact">💬 واتساب 776724021</a>
+    </div>
+  </header>
+
+  <!-- محتوى النظام -->
+  <div class="system-container">
+    <a href="ebda3soft.html" class="back-link">← العودة للأنظمة</a>
+
+    <div class="system-hero">
+      <div class="system-header-flex">
+        <div class="system-title-area">
+          <h1>نظام الأصول الثابتة</h1>
+          <p>إبداع سوفت — نظام لإدارة الأصول والإهلاك وتتبع دورة حياة الأصل</p>
+        </div>
+        <div class="system-badges">
+          <span class="badge">5 مميزات رئيسية</span>
+        </div>
+      </div>
+
+      <!-- التبويبات الفرعية -->
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-description')">الوصف</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-features')">المميزات</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-brochures')">البروشورات</button>
+      </div>
+    </div>
+
+    <!-- تبويب الوصف -->
+    <div id="tab-description" class="tab-content active">
+      <div class="description-box">
+        <h3>وصف النظام</h3>
+        <p>
+          نظام لإدارة الأصول والإهلاك وتتبع دورة حياة الأصل. يساعد الشركات في إدارة مباني ومعدات وآلات وسيارات مع حساب الإهلاك تلقائياً.
+        </p>
+      </div>
+    </div>
+
+    <!-- تبويب المميزات -->
+    <div id="tab-features" class="tab-content">
+      <div class="features-section">
+        <h3>مميزات النظام</h3>
+        <div class="features-grid">
+          <div class="feature-card">
+            <span class="feature-icon">🏗️</span>
+            <h4>تسجيل الأصول</h4>
+            <p>تسجيل تفصيلي لجميع أصول الشركة.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">📉</span>
+            <h4>الإهلاك</h4>
+            <p>حساب الإهلاك تلقائياً وفق المعايير المحاسبية.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">🔧</span>
+            <h4>الصيانة</h4>
+            <p>جدولة ومتابعة أعمال صيانة الأصول.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">🔄</span>
+            <h4>النقل</h4>
+            <p>تتبع نقل الأصول بين الأقسام والفروع.</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">📊</span>
+            <h4>التقارير</h4>
+            <p>تقارير مالية شاملة لقيمة الأصول.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- تبويب البروشورات -->
+    <div id="tab-brochures" class="tab-content">
+      <div class="description-box">
+        <h3>البروشورات التعريفية</h3>
+        <p>استعرض البروشورات الخاصة بنظام الأصول الثابتة للاطلاع على التفاصيل والخصائص:</p>
+        
+        <div class="brochures-grid">
+          <!-- البروشور الأول -->
+          <div class="brochure-card">
+            <img src="images/الاصول1.jpg" 
+                 onerror="if(this.src.indexOf('.jpg')!=-1){this.src='images/الاصول1.png';}else if(this.src.indexOf('.png')!=-1){this.src='images/الاصول1.JPG';}" 
+                 alt="بروشور نظام الأصول الثابتة 1" class="brochure-img" title="انقر لتكبير الصورة">
+            <div class="brochure-title">بروشور نظام الأصول 1</div>
+          </div>
+          <!-- البروشور الثاني -->
+          <div class="brochure-card">
+            <img src="images/الاصول2.jpg" 
+                 onerror="if(this.src.indexOf('.jpg')!=-1){this.src='images/الاصول2.png';}else if(this.src.indexOf('.png')!=-1){this.src='images/الاصول2.JPG';}" 
+                 alt="بروشور نظام الأصول الثابتة 2" class="brochure-img" title="انقر لتكبير الصورة">
+            <div class="brochure-title">بروشور نظام الأصول 2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- طلب عرض سعر -->
+    <div class="cta-box" id="contact">
+      <h3>هل أنت مهتم بـ نظام الأصول الثابتة؟</h3>
+      <p>تواصل معنا للحصول على عرض سعر مخصص وتجربة مجانية عبر الرقم <strong>776724021</strong></p>
+      <a href="https://wa.me/967776724021?text=السلام%20عليكم،%20أرغب%20بطلب%20عرض%20سعر%20لنظام%20الأصول%20الثابتة" target="_blank" class="btn-whatsapp-large">
+        💬 طلب عرض سعر عبر واتساب (+967 776724021)
+      </a>
+    </div>
+  </div>
+
+  <!-- زر الواتساب العائم -->
+  <a href="https://wa.me/967776724021" class="whatsapp-float" target="_blank" title="تواصل مباشر عبر واتساب">💬</a>
+
+  <!-- التذييل Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+          <img src="images/الشعار.jpg" alt="الشعار" style="width: 40px; height: 40px; border-radius: 6px; background: #fff; padding: 2px;">
+          <h4 style="margin-bottom: 0;">إبداع سوفت</h4>
+        </div>
+        <p><strong>للأنظمة الخاصة - فرع الحديدة</strong></p>
+        <p>نقدم أفضل الحلول البرمجية المتكاملة لتطوير أعمالكم وتحقيق أهدافكم التجارية بكفاءة عالية.</p>
+        <p>🌐 الموقع الرسمي: ebda3soft.com</p>
+        <p>تابعنا على وسائل التواصل</p>
+      </div>
+      
+      <div class="footer-col">
+        <h4>معلومات التواصل</h4>
+        <p>📞 <strong>+967 776724021</strong></p>
+        <p>💬 <strong>واتساب مباشر:</strong> +967 776724021</p>
+        <p>📍 <strong>الحديدة - شارع صنعاء، عمارة الحظاء، الدور الثالث</strong></p>
+      </div>
+
+      <div class="footer-col">
+        <h4>أنظمتنا</h4>
+        <a href="dotxpro.html">دوت اكس برو</a>
+        <a href="maal.html">مال المحاسبي</a>
+        <a href="exchange.html">شركات الصرافة</a>
+        <a href="sarraf-plus.html">الصراف بلاس</a>
+        <a href="sarraf-advanced.html">الصراف المتقدم</a>
+        <a href="cars.html">معارض السيارات</a>
+        <a href="tajer.html">التاجر المطور</a>
+        <a href="hospitals.html">المستشفيات</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>روابط الأنظمة</h4>
+        <a href="schools.html">المدارس</a>
+        <a href="hotels.html">الفنادق</a>
+        <a href="electricity.html">الكهرباء</a>
+        <a href="fuel.html">الوقود</a>
+        <a href="water.html">مشاريع المياه</a>
+        <a href="restaurants.html">المطاعم</a>
+        <a href="hr.html">الموارد البشرية</a>
+        <a href="assets.html">الأصول الثابتة</a>
+      </div>
+    </div>
+
+    <div class="copyright">
+      &copy; 2026 إبداع سوفت للأنظمة الخاصة — جميع الحقوق محفوظة
+    </div>
+  </footer>
+
+  <!-- سكربت التحكم في التبويبات -->
+  <script>
+    function switchTab(evt, tabId) {
+      const contents = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < contents.length; i++) {
+        contents[i].classList.remove("active");
+      }
+
+      const buttons = document.getElementsByClassName("tab-btn");
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active");
+      }
+
+      document.getElementById(tabId).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
+  </script>
+<script src="chatbot.js"></script>
+</body>
+</html>
