@@ -204,7 +204,7 @@
     }
     .whatsapp-float:hover { transform: scale(1.1); }
 
-    /* تنسيقات مساعد الذكاء الاصطناعي العائم (عبدالباري القردوع) في الأسفل */
+    /* تنسيقات مساعد الذكاء الاصطناعي العائم في الأسفل */
     #ebda3-ai-widget {
       position: fixed;
       bottom: 95px;
@@ -386,7 +386,7 @@
 </head>
 <body>
 
-  <!-- الهيدر الرئيسي مع الشعار (تمت إزالة رابط المساعد من هنا) -->
+  <!-- الهيدر الرئيسي مع الشعار (بدون رابط المساعد العلوي) -->
   <header class="header-nav">
     <div class="brand-container">
       <img src="images/الشعار.jpg" alt="شعار إبداع سوفت" class="brand-logo">
@@ -655,7 +655,7 @@
   <!-- زر الواتساب العائم -->
   <a href="https://wa.me/967776724021" class="whatsapp-float" target="_blank" title="تواصل مباشر عبر واتساب">💬</a>
 
-  <!-- مساعد الذكاء الاصطناعي العائم (عبدالباري القردوع) في الأسفل -->
+  <!-- مساعد الذكاء الاصطناعي العائم في الأسفل (عبدالباري القردوع) -->
   <div id="ebda3-ai-widget">
     <button id="ai-chat-toggle-btn" aria-label="مساعد إبداع سوفت">🤖</button>
 
@@ -725,7 +725,7 @@
     </div>
   </footer>
 
-  <!-- البرمجية التفاعلية المحدثة لشرح وتهيئة الأنظمة (عبدالباري القردوع) -->
+  <!-- البرمجية التفاعلية للمساعد (عبدالباري القردوع) -->
   <script>
     const toggleBtn = document.getElementById('ai-chat-toggle-btn');
     const chatBox = document.getElementById('ai-chat-box');
@@ -742,7 +742,6 @@
       chatBox.classList.add('ai-chat-hidden');
     });
 
-    // قاعدة بيانات ذكية لشرح خطوات التهيئة وأنظمة إبداع سوفت
     function getBotResponse(input) {
       const text = input.toLowerCase();
 
