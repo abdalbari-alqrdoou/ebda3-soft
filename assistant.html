@@ -1,186 +1,186 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مساعد إبداع سوفت الذكي</title>
-<!-- خط تجوال العربي -->
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المساعد الذكي - إبداع سوفت</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Tajawal', sans-serif;
+            background: #121824;
+            color: white;
+        }
 
-<style>
-body{
-font-family: 'Tajawal', Arial, sans-serif;
-background:#121824;
-color:white;
-text-align:center;
-padding:20px;
-}
+        .header {
+            background: #1e2638;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #2e3a52;
+            position: relative;
+        }
 
-/* زر العودة للرئيسية */
-.back-home {
-  display: inline-block;
-  margin-bottom: 20px;
-  color: #00b887;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-  transition: 0.3s;
-}
-.back-home:hover {
-  color: #00966d;
-  text-decoration: underline;
-}
+        .header h1 {
+            color: #00b887;
+            margin-bottom: 5px;
+        }
 
-.chat{
-width:400px;
-max-width:95%;
-margin:auto;
-background:#1e2638;
-padding:20px;
-border-radius:15px;
-box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-}
+        .back-link {
+            position: absolute;
+            right: 20px;
+            top: 25px;
+            color: #a0aec0;
+            text-decoration: none;
+            font-size: 14px;
+            background: #2e3a52;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        .back-link:hover { color: #fff; background: #00b887; }
 
-h1{
-color:#00b887;
-font-size: 24px;
-margin-bottom: 15px;
-}
+        .chat {
+            width: 90%;
+            max-width: 750px;
+            margin: 30px auto;
+            background: #1e2638;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border: 1px solid #2e3a52;
+        }
 
-.box{
-height:350px;
-overflow-y:auto;
-background:#151c28;
-padding:15px;
-border-radius:10px;
-text-align:right;
-margin-bottom: 15px;
-border: 1px solid #2e3a52;
-}
+        .messages {
+            height: 420px;
+            overflow-y: auto;
+            background: #151c28;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
-.input-container {
-display: flex;
-gap: 8px;
-}
+        .msg {
+            padding: 12px 16px;
+            border-radius: 10px;
+            max-width: 85%;
+            line-height: 1.6;
+            font-size: 14px;
+        }
 
-input{
-flex: 1;
-padding:12px;
-border-radius:8px;
-border:1px solid #2e3a52;
-background: #1e2638;
-color: white;
-font-family: 'Tajawal', sans-serif;
-outline: none;
-}
+        .bot {
+            background: #2e3a52;
+            color: #f0f4f8;
+            align-self: flex-start;
+        }
 
-input:focus {
-border-color: #00b887;
-}
+        .user {
+            background: #00b887;
+            color: white;
+            align-self: flex-end;
+        }
 
-button{
-padding:12px 20px;
-background:#00b887;
-color:white;
-border:0;
-border-radius:8px;
-cursor:pointer;
-font-weight: bold;
-font-family: 'Tajawal', sans-serif;
-transition: 0.3s;
-}
+        .input-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
 
-button:hover{
-background:#00966d;
-}
+        input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #2e3a52;
+            background: #151c28;
+            color: white;
+            font-family: 'Tajawal', sans-serif;
+            outline: none;
+        }
 
-.msg{
-margin:10px 0;
-padding:10px 14px;
-border-radius:8px;
-background:#2e3a52;
-font-size: 14px;
-line-height: 1.6;
-}
+        input:focus {
+            border-color: #00b887;
+        }
 
-</style>
+        button {
+            background: #00b887;
+            color: white;
+            border: 0;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #00966d;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- رابط الرجوع للرئيسية -->
-<a href="ebda3soft.html" class="back-home">⬅ العودة للرئيسية</a>
-
-<h1>🤖 مساعد إبداع سوفت الذكي</h1>
-
-<div class="chat">
-  <div class="box" id="chat">
-    <div class="msg">
-      مرحباً بك 👋 <br>
-      أنا مساعد إبداع سوفت، اسألني عن الأنظمة والتهيئة والدعم.
+    <div class="header">
+        <a href="index.html" class="back-link">&larr; عودة للرئيسية</a>
+        <h1>🤖 المساعد الذكي - إبداع سوفت</h1>
+        <p>خبير شرح وتهيئة الأنظمة المحاسبية والإدارية (فرع الحديدة)</p>
     </div>
-  </div>
 
-  <div class="input-container">
-    <input id="text" placeholder="اكتب سؤالك هنا..." autofocus>
-    <button onclick="send()">إرسال</button>
-  </div>
+    <div class="chat">
+        <div class="messages" id="messages">
+            <div class="msg bot">
+                مرحباً بك 👋<br>
+                أنا مساعد إبداع سوفت. اسألني عن تهيئة الحسابات، المخازن، أو القيود وسأشرحها لك خطوة بخطوة.
+            </div>
+        </div>
 
-  <!-- زر تواصل واتساب -->
-  <a href="https://wa.me/967776724021" target="_blank" style="
-  display:block;
-  margin-top:20px;
-  background:#25d366;
-  color:white;
-  padding:10px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:bold;">
-  💬 تواصل مع الدعم الفني واتساب</a>
+        <div class="input-box">
+            <input id="question" placeholder="اكتب سؤالك هنا (مثلاً: كيف أهيء دليل الحسابات؟)...">
+            <button onclick="send()">إرسال</button>
+        </div>
+    </div>
 
-</div>
+    <script>
+        function send() {
+            let qInput = document.getElementById("question");
+            let q = qInput.value.trim();
+            if (q === "") return;
 
-<script>
-function send(){
-let input = document.getElementById("text");
-let chat = document.getElementById("chat");
+            let box = document.getElementById("messages");
+            
+            // رسالة المستخدم
+            box.innerHTML += `<div class="msg user">${q}</div>`;
+            qInput.value = "";
+            box.scrollTop = box.scrollHeight;
 
-if(input.value.trim() == "") return;
+            // تحديد الرد بناءً على محتوى السؤال
+            setTimeout(() => {
+                let answer = "سأساعدك في شرح أنظمة إبداع سوفت وخطوات التهيئة. للمزيد من التفاصيل أو المساعدة المباشرة تواصل معنا عبر واتساب 776724021.";
+                
+                let text = q.toLowerCase();
+                if (text.includes("حساب") || text.includes("شجرة") || text.includes("دليل")) {
+                    answer = "<strong>خطوات تهيئة دليل الحسابات:</strong><br>1. افتح قائمة <strong>الحسابات</strong>.<br>2. اختر <strong>دليل الحسابات</strong>.<br>3. انقر على زر (إضافة حساب رئيسي أو فرعي).<br>4. أدخل الرمز واسم الحساب ثم اضغط <strong>حفظ</strong>.";
+                } else if (text.includes("مخزن") || text.includes("مستودع") || text.includes("صنف")) {
+                    answer = "<strong>خطوات تهيئة المخازن والأصناف:</strong><br>1. افتح نظام <strong>المخازن والمستودعات</strong>.<br>2. اختر <strong>تهيئة المخازن</strong> لإضافة المستودع الرئيسي.<br>3. انتقل إلى <strong>مجموعات الأصناف</strong> وأدخل الوحدات والأسعار ثم احفظ البيانات.";
+                } else if (text.includes("قيد") || text.includes("سند") || text.includes("قبض") || text.includes("صرف")) {
+                    answer = "<strong>خطوات إدخال السندات والقيود:</strong><br>1. توجه إلى <strong>الحسابات العامة</strong>.<br>2. اختر السند المطلوب (سند قبض / سند صرف / قيد يومية).<br>3. أدخل الأطراف (مدين ودائن) وتأكد من توازن المبلغ ثم اضغط <strong>حفظ وترحيل</strong>.";
+                } else if (text.includes("سعر") || text.includes("تواصل") || text.includes("رقم")) {
+                    answer = "للاستفسار عن الأسعار أو طلب نزول ميداني لفرع الحديدة، يرجى التواصل مباشرة عبر واتساب: <strong>776724021</strong>.";
+                }
 
-// حماية النص المدخل وعرض رسالة المستخدم بأمان
-let safeText = input.value.replace(/</g,"&lt;").replace(/>/g,"&gt;");
-chat.innerHTML += "<div class='msg'>👤 " + safeText + "</div>";
+                box.innerHTML += `<div class="msg bot">${answer}</div>`;
+                box.scrollTop = box.scrollHeight;
+            }, 600);
+        }
 
-// منطق الردود لأنظمة إبداع سوفت
-let question = input.value.toLowerCase();
-let answer = "يمكنني مساعدتك في شرح أنظمة إبداع سوفت والتهيئة والدعم الفني.";
-
-if(question.includes("دوت") || question.includes("dotx")){
-    answer = "نظام دوت اكس برو هو نظام محاسبي وإداري متكامل يدعم الفروع والمخازن والتقارير المالية والصلاحيات.";
-} else if(question.includes("مخزن") || question.includes("اصناف")){
-    answer = "لتهيئة المخازن: من القائمة الرئيسية افتح المخازن، أضف المستودعات، ثم قم بإضافة مجموعات الأصناف والأصناف.";
-} else if(question.includes("حساب") || question.includes("شجرة")){
-    answer = "لتهيئة دليل الحسابات: افتح الحسابات ثم دليل الحسابات ثم أضف الحسابات الرئيسية والفرعية واحفظ.";
-} else if(question.includes("سعر") || question.includes("عرض")){
-    answer = "للحصول على الأسعار والعروض تواصل مع إبداع سوفت فرع الحديدة عبر واتساب 776724021.";
-} else if(question.includes("مدارس")){
-    answer = "نظام المدارس يساعد في إدارة الطلاب، الرسوم، الدرجات، الموظفين والجداول.";
-}
-
-// عرض رد المساعد
-chat.innerHTML += "<div class='msg'>🤖 " + answer + "</div>";
-
-input.value = "";
-chat.scrollTop = chat.scrollHeight;
-}
-
-// تفعيل الإرسال بزر Enter
-document.getElementById("text").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        send();
-    }
-});
-</script>
-
+        // تفعيل الضغط على زر Enter للإرسال
+        document.getElementById("question").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                send();
+            }
+        });
+    </script>
 </body>
 </html>
