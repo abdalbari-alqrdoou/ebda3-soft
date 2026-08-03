@@ -111,7 +111,7 @@
     .system-hero h1 { font-size: 32px; color: #fff; }
     .system-hero p { color: var(--text-muted); font-size: 16px; line-height: 1.8; }
     
-    .system-stats { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 10px; }
+    .system-stats { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
     .stat-badge {
       background: rgba(0,184,135,0.1);
       border: 1px solid var(--primary);
@@ -120,6 +120,14 @@
       color: var(--primary);
       font-weight: 700;
       font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .stat-badge:hover {
+      background: rgba(0,184,135,0.2);
     }
 
     /* تبويبات وأقسام المحتوى */
@@ -281,9 +289,13 @@
       <p>نظام إداري متكامل للمحاسبة وإدارة المخزون والمبيعات والمشتريات ونقاط البيع، للأنشطة التجارية والصناعية والخدمية. يتيح إدارة شاملة للعمليات المالية والمخزنية بدرجة عالية من الأمان والاحترافية.</p>
       
       <div class="system-stats">
-        <div class="stat-badge">⭐ 85 ميزة رئيسية</div>
-        <div class="stat-badge">👥 دعم فني مستمر</div>
-        <div class="stat-badge">📹 فيديوهات تعليمية</div>
+        <!-- زر الدليل التعليمي المضاف حديثاً في المكان المطلوب -->
+        <a href="pdf/الدليل التعليمي لنظام الدوت اكس برو.pdf" target="_blank" class="stat-badge" title="عرض الدليل التعليمي PDF">
+          📖 الدليل التعليمي
+        </a>
+        <a href="#videos" class="stat-badge">📹 فيديوهات تعليمية</a>
+        <div class="stat-badge" style="cursor: default;">👥 دعم فني مستمر</div>
+        <div class="stat-badge" style="cursor: default;">⭐ 85 ميزة رئيسية</div>
       </div>
     </div>
 
