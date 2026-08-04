@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GS18LX7LM7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GS18LX7LM7');
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>إبداع سوفت للأنظمة الخاصة - فرع الحديدة</title>
@@ -733,12 +743,14 @@
     const userInput = document.getElementById('ai-user-input');
     const chatMessages = document.getElementById('ai-chat-messages');
 
-    headerToggleBtn.addEventListener('click', () => {
-      chatBox.classList.toggle('ai-chat-hidden');
-      if (!chatBox.classList.contains('ai-chat-hidden')) {
-        userInput.focus();
-      }
-    });
+    if(headerToggleBtn) {
+      headerToggleBtn.addEventListener('click', () => {
+        chatBox.classList.toggle('ai-chat-hidden');
+        if (!chatBox.classList.contains('ai-chat-hidden')) {
+          userInput.focus();
+        }
+      });
+    }
 
     closeBtn.addEventListener('click', () => {
       chatBox.classList.add('ai-chat-hidden');
