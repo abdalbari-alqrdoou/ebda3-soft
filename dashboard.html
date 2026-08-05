@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم والإحصائيات - إبداع سوفت</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #121824;
+      --card-bg: #1e2638;
+      --card-border: #2e3a52;
+      --primary: #00b887;
+      --primary-hover: #00966d;
+      --text-main: #f0f4f8;
+      --text-muted: #a0aec0;
+      --accent-yellow: #ffb703;
+      --danger: #ff5252;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; }
+    
+    /* الشريط الجانبي */
+    .sidebar {
+      width: 260px;
+      background: var(--card-bg);
+      border-left: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .sidebar h2 { font-size: 18px; color: var(--primary); margin-bottom: 30px; text-align: center; }
+    .sidebar a {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 12px 15px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-weight: 500;
+      transition: 0.3s;
+      display: block;
+    }
+    .sidebar a:hover, .sidebar a.active { background: rgba(0, 184, 135, 0.1); color: var(--primary); }
+    .logout-btn {
+      margin-top: auto;
+      background: rgba(255, 82, 82, 0.1);
+      color: var(--danger);
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      transition: 0.3s;
+    }
+    .logout-btn:hover { background: var(--danger); color: white; }
+
+    /* محتوى لوحة التحكم */
+    .main-content { flex: 1; padding: 40px; overflow-y: auto; }
+    .header-dash { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; border-bottom: 1px solid var(--card-border); padding-bottom: 20px; }
+    .header-dash h1 { font-size: 26px; color: #fff; }
+    .admin-name { color: var(--accent-yellow); font-weight: 700; }
+
+    /* شبكة الإحصائيات */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .stat-card h3 { font-size: 15px; color: var(--text-muted); margin-bottom: 10px; }
+    .stat-card .number { font-size: 32px; font-weight: 800; color: var(--primary); }
+
+    .quick-actions {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 25px;
+      border-radius: 12px;
+    }
+    .quick-actions h3 { font-size: 18px; color: #fff; margin-bottom: 15px; }
+    .quick-actions p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+  <!-- الشريط الجانبي -->
+  <div class="sidebar">
+    <h2>إبداع سوفت - الإدارة</h2>
+    <a href="dashboard.html" class="active">📊 لوحة الإحصائيات</a>
+    <a href="ebda3soft.html" target="_blank">🌐 زيارة الموقع الرسمي</a>
+    <button class="logout-btn" id="logoutBtn">تسجيل الخروج</button>
+  </div>
+
+  <!-- المحتوى الرئيسي -->
+  <div class="main-content">
+    <div class="header-dash">
+      <h1>لوحة التحكم الرئيسية</h1>
+      <div>مرحباً بك، <span class="admin-name" id="adminWelcomeName">مدير النظام</span></div>
+    </div>
+
+    <!-- مربعات الإحصائيات الجلوبة من قاعدة البيانات -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>إجمالي الزيارات</h3>
+        <div class="number" id="totalVisits">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>مشاهدات الصفحة</h3>
+        <div class="number" id="totalViews">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>الأنظمة المعروضة</h3>
+        <div class="number">16</div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <h3>حالة النظام والاتصال</h3>
+      <p>اللوحة متصلة حالياً بـ Backend الـ API (ASP.NET Core) لعرض سجلات قاعدة البيانات الحية. يمكنك متابعة حركة الزوار وتحديث محتوى الموقع بكل سهولة.</p>
+    </div>
+  </div>
+
+  <script>
+    // 1. التحقق من حالة تسجيل الدخول عبر localStorage
+    if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+      window.location.href = 'admin.html'; // إعادة توجيه لصفحة تسجيل الدخول إن لم يكن مسجلاً
+    } else {
+      const name = localStorage.getItem('adminName') || 'مدير النظام';
+      document.getElementById('adminWelcomeName').textContent = name;
+    }
+
+    // 2. زر تسجيل الخروج
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('isAdminLoggedIn');
+      localStorage.removeItem('adminName');
+      window.location.href = 'admin.html';
+    });
+
+    // 3. جلب الإحصائيات الحقيقية من الـ API (`/api/Dashboard/stats`)
+    async function fetchDashboardStats() {
+      try {
+        const response = await fetch('https://localhost:7264/api/Dashboard/stats');
+        if (response.ok) {
+          const data = await response.json();
+          document.getElementById('totalVisits').textContent = data.visitsCount || 0;
+          document.getElementById('totalViews').textContent = data.viewsCount || 0;
+        } else {
+          console.error('فشل في جلب البيانات من الخادم');
+        }
+      } catch (err) {
+        console.error('خطأ في الاتصال بالـ API:', err);
+      }
+    }
+
+    // تنفيذ جلب البيانات عند تحميل الصفحة
+    fetchDashboardStats();
+  </script>
+</body>
+</html>
