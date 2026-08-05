@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة الإدارة - إبداع سوفت فرع الحديدة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #121824;
+      --card-bg: #1e2638;
+      --card-border: #2e3a52;
+      --primary: #00b887;
+      --primary-hover: #00966d;
+      --text-main: #f0f4f8;
+      --text-muted: #a0aec0;
+      --accent-yellow: #ffb703;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; padding: 20px; }
+
+    .admin-container {
+      max-width: 1000px;
+      margin: 40px auto;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      padding: 20px 30px;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+
+    .admin-header h1 {
+      color: var(--primary);
+      font-size: 24px;
+    }
+
+    .back-btn {
+      background: var(--card-border);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: var(--primary);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .stat-card h3 {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .stat-card .number {
+      color: var(--accent-yellow);
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .panel-section {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 25px;
+    }
+
+    .panel-section h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 10px;
+      color: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid var(--card-border);
+      font-size: 14px;
+    }
+
+    th {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    td {
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-container">
+    <!-- هيدر لوحة الإدارة -->
+    <div class="admin-header">
+      <h1>لوحة إدارة إبداع سوفت (فرع الحديدة)</h1>
+      <a href="index.html" class="back-btn">← العودة للرئيسية</a>
+    </div>
+
+    <!-- إحصائيات سريعة -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>إجمالي الزيارات</h3>
+        <div class="number" id="total-visits">--</div>
+      </div>
+      <div class="stat-card">
+        <h3>الأنظمة المعروضة</h3>
+        <div class="number">16 نظاماً</div>
+      </div>
+      <div class="stat-card">
+        <h3>حالة الخادم (API)</h3>
+        <div class="number" style="font-size: 16px; color: var(--primary); margin-top: 5px;" id="api-status">جاري الفحص...</div>
+      </div>
+    </div>
+
+    <!-- جدول تتبع الزيارات والبيانات -->
+    <div class="panel-section">
+      <h2>سجل الزيارات والنشاطات الأخيرة</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>رقم التسلسل</th>
+            <th>الصفحة المطلوبة</th>
+            <th>تاريخ ووقت الزيارة</th>
+          </tr>
+        </thead>
+        <tbody id="visits-table-body">
+          <tr>
+            <td colspan="3" style="text-align: center;">جاري جلب البيانات من الخادم...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // جلب البيانات والإحصائيات من الـ API الخاص بك
+    async function loadAdminData() {
+      try {
+        const response = await fetch('https://localhost:7264/api/Visits');
+        if (response.ok) {
+          const visits = await response.json();
+          document.getElementById('api-status').textContent = 'متصل بنجاح ✓';
+          document.getElementById('total-visits').textContent = visits.length || 0;
+          
+          const tbody = document.getElementById('visits-table-body');
+          tbody.innerHTML = '';
+          
+          if (visits.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align: center;">لا توجد زيارات مسجلة حتى الآن</td></tr>';
+            return;
+          }
+
+          visits.forEach((v, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${index + 1}</td>
+              <td>${v.pageUrl || 'index.html'}</td>
+              <td>${new Date(v.visitDate || Date.now()).toLocaleString('ar-SA')}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        } else {
+          throw new Error('API error');
+        }
+      } catch (e) {
+        document.getElementById('api-status').textContent = 'الخادم غير متصل ✕';
+        document.getElementById('total-visits').textContent = '0';
+        document.getElementById('visits-table-body').innerHTML = '<tr><td colspan="3" style="text-align: center; color: #ffb703;">تعذر الاتصال بقاعدة البيانات أو خادم الـ API المحلي.</td></tr>';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', loadAdminData);
+  </script>
+</body>
+</html>
