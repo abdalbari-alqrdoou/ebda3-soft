@@ -246,7 +246,7 @@
       line-height: 1.6;
     }
 
-    /* شبكة الصور التوضيحية (معارض1، معارض2) */
+    /* شبكة الصور التوضيحية */
     .images-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -393,7 +393,7 @@
         </div>
       </div>
 
-      <!-- التبويبات الفرعية (تم تحويل زر البروشورات إلى زر تبويب تفاعلي) -->
+      <!-- التبويبات الفرعية -->
       <div class="tabs-nav">
         <button class="tab-btn active" onclick="switchTab(event, 'tab-description')">الوصف</button>
         <button class="tab-btn" onclick="switchTab(event, 'tab-features')">المميزات</button>
@@ -476,7 +476,7 @@
       </div>
     </div>
 
-    <!-- تبويب البروشورات (يحتوي على صور معارض1 ومعارض2 عند الضغط عليه) -->
+    <!-- تبويب البروشورات -->
     <div id="tab-brochures" class="tab-content">
       <div class="description-box">
         <h3>بروشورات وواجهات نظام معارض السيارات</h3>
@@ -495,14 +495,19 @@
       </div>
     </div>
 
-    <!-- تبويب الدليل التعليمي (فارغ حالياً ويمكنك إضافة محتواه مستقبلاً) -->
+    <!-- تبويب الدليل التعليمي (محدث ليرتبط بملف الـ PDF بالاسم الإنجليزي لتجنب أخطاء المسار) -->
     <div id="tab-guide" class="tab-content">
       <div class="description-box">
         <h3>الدليل التعليمي لنظام معارض السيارات</h3>
-        <p>قريباً سيتم إضافة شروحات فيديو وأدلة تعليمية مفصلة لاستخدام النظام.</p>
+        <p>يمكنك الاطلاع على الدليل التعليمي الشامل الخاص بالنظام للتعرف على كافة خطوات التشغيل، الإدارة، وعقود المعارض:</p>
+        
+        <div style="margin-top: 20px;">
+          <a href="pdf/car-guide.pdf" target="_blank" class="btn-whatsapp-large" style="background-color: var(--primary); box-shadow: 0 4px 15px rgba(0, 184, 135, 0.3);">
+            📄 فتح واستعراض الدليل التعليمي (PDF)
+          </a>
+        </div>
       </div>
     </div>
-
     <!-- طلب عرض سعر -->
     <div class="cta-box" id="contact">
       <h3>هل أنت مهتم بـ نظام معارض السيارات؟</h3>
@@ -534,7 +539,6 @@
         <h4>معلومات التواصل</h4>
         <p>📞 <strong>+967 776724021</strong></p>
         <p>💬 <strong>واتساب مباشر:</strong> +967 776724021</p>
-      
         <p>📍 <strong>الحديدة - شارع صنعاء، عمارة الحظاء، الدور الثالث</strong></p>
       </div>
 
@@ -571,19 +575,16 @@
   <!-- سكربت التحكم في التبويبات الفورية -->
   <script>
     function switchTab(evt, tabId) {
-      // إخفاء جميع محتويات التبويبات
       const contents = document.getElementsByClassName("tab-content");
       for (let i = 0; i < contents.length; i++) {
         contents[i].classList.remove("active");
       }
 
-      // إزالة فئة active من جميع أزرار التبويبات
       const buttons = document.getElementsByClassName("tab-btn");
       for (let i = 0; i < buttons.length; i++) {
         buttons[i].classList.remove("active");
       }
 
-      // إظهار التبويب المطلوب وتنشيط الزر الخاص به
       document.getElementById(tabId).classList.add("active");
       evt.currentTarget.classList.add("active");
     }
