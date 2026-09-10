@@ -1772,41 +1772,61 @@ function login() {
 /* =========================================================
    قائمة الأنظمة
 ========================================================= */
-
 function showActivitySelector() {
 
-    let html =
-        `<div>🏢 اختر النظام أو النشاط الذي تريد معرفة تفاصيله:</div>`;
+    const chat = document.getElementById("chat");
 
-    html +=
-        `<div class="activity-grid">`;
+    const msg = document.createElement("div");
+    msg.className = "message bot";
 
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
 
-    systemsList.forEach(function(sys) {
+    const title = document.createElement("div");
+    title.textContent =
+        "🏢 اختر النظام أو النشاط الذي تريد معرفة تفاصيله:";
 
-        const safeName =
-            escapeAttribute(sys);
+    bubble.appendChild(title);
 
-        html += `
-            <button
-                class="activity-btn"
-                onclick="selectSystemDetail('${safeName}')">
+    const grid = document.createElement("div");
+    grid.className = "activity-grid";
 
-                ${escapeHtml(sys)}
+    systemsList.forEach(function (sys) {
 
-            </button>
-        `;
+        const btn = document.createElement("button");
 
+        btn.type = "button";
+        btn.className = "activity-btn";
+        btn.textContent = sys;
+
+        btn.addEventListener("click", function () {
+            selectSystemDetail(sys);
+        });
+
+        grid.appendChild(btn);
     });
 
+    bubble.appendChild(grid);
 
-    html += `</div>`;
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
 
+    if (systemLogo) {
+        const img = document.createElement("img");
+        img.src = systemLogo;
+        img.alt = "Logo";
+        avatar.appendChild(img);
+    } else {
+        avatar.textContent = "🤖";
+    }
 
-    addBotMessage(html);
+    msg.appendChild(avatar);
+    msg.appendChild(bubble);
+
+    chat.appendChild(msg);
+
+    scrollToBottom();
 }
-
-
 /* =========================================================
    اختيار نظام
 ========================================================= */
@@ -2273,7 +2293,7 @@ async function sendMessage() {
         });
 
 
-        addBotMessage(aiReply);
+    addBotMessage(aiReply, false);
 
 
     } catch (error) {
