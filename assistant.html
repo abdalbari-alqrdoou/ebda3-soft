@@ -562,9 +562,9 @@ header {
         <button id="sendButton" type="button" onclick="sendMessage()">➤</button>
     </div>
     <div class="input-note">
-        تطوير شركة تكتيك سوفت 
-        <a class="taktik-link" href="https://wa.me/967777643824" target="_blank">777643824</a> / 
-        <a class="taktik-link" href="https://wa.me/967780800114" target="_blank">780800114</a>
+         تطوير م. عبدالباري القردوع 
+        <a class="taktik-link" href="https://wa.me/967776724021" target="_blank">776724021</a> / 
+        <a class="taktik-link" href="https://wa.me/967776724021" target="_blank">771819083</a>
     </div>
 </div>
 
@@ -631,7 +631,7 @@ header {
 
 <script>
 const OPENROUTER_API_KEY = "";
-const OPENROUTER_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
+const OPENROUTER_ENDPOINT = "/.netlify/functions/chat";
 const OPENROUTER_MODEL = "openrouter/free";
 
 let clientInfo = { name: "", phone: "", city: "" };
@@ -789,7 +789,7 @@ async function sendMessage() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + OPENROUTER_API_KEY
+              
             },
             body: JSON.stringify({
                 model: OPENROUTER_MODEL,
