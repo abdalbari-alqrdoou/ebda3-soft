@@ -1,67 +1,50 @@
-exports.handler = async function (event) {
-    const jsonHeaders = {
-        "Content-Type": "application/json; charset=utf-8"
+export default async (req) => {
+    const headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST, OPTIONS"
     };
 
-    if (event.httpMethod !== "POST") {
-        return {
-            statusCode: 405,
-            headers: jsonHeaders,
-            body: JSON.stringify({
-                error: "Method Not Allowed"
-            })
-        };
+    // CORS preflight
+    if (req.method === "OPTIONS") {
+        return new Response(null, {
+            status: 204,
+            headers
+        });
+    }
+
+    if (req.method !== "POST") {
+        return Response.json(
+            { error: "Method Not Allowed" },
+            { status: 405, headers }
+        );
     }
 
     try {
         const apiKey = process.env.OPENROUTER_API_KEY;
 
         if (!apiKey) {
-            return {
-                statusCode: 500,
-                headers: jsonHeaders,
-                body: JSON.stringify({
-                    error: "OPENROUTER_API_KEY غير موجود في Netlify"
-                })
-            };
+            return Response.json(
+                {
+                    error: "OPENROUTER_API_KEY غير موجود في Netlify Environment Variables"
+                },
+                { status: 500, headers }
+            );
         }
 
-        let rawBody = event.body || "";
+        const body = await req.json();
 
-        if (event.isBase64Encoded) {
-            rawBody = Buffer.from(rawBody, "base64").toString("utf8");
+        if (!body || !Array.isArray(body.messages)) {
+            return Response.json(
+                {
+                    error: "الطلب يجب أن يحتوي على messages"
+                },
+                { status: 400, headers }
+            );
         }
 
-        rawBody = rawBody.trim();
-
-        let body;
-
-        try {
-            body = JSON.parse(rawBody);
-        } catch (parseError) {
-            return {
-                statusCode: 400,
-                headers: jsonHeaders,
-                body: JSON.stringify({
-                    error: "الطلب المرسل ليس JSON صالحًا",
-                    receivedLength: rawBody.length,
-                    receivedStart: rawBody.substring(0, 100),
-                    parseError: parseError.message
-                })
-            };
-        }
-
-        if (!Array.isArray(body.messages)) {
-            return {
-                statusCode: 400,
-                headers: jsonHeaders,
-                body: JSON.stringify({
-                    error: "messages غير موجودة أو ليست Array"
-                })
-            };
-        }
-
-        const response = await fetch(
+        const openRouterResponse = await fetch(
             "https://openrouter.ai/api/v1/chat/completions",
             {
                 method: "POST",
@@ -78,22 +61,20 @@ exports.handler = async function (event) {
             }
         );
 
-        const responseText = await response.text();
+        const result = await openRouterResponse.text();
 
-        return {
-            statusCode: response.status,
-            headers: jsonHeaders,
-            body: responseText
-        };
+        return new Response(result, {
+            status: openRouterResponse.status,
+            headers
+        });
 
     } catch (error) {
-        return {
-            statusCode: 500,
-            headers: jsonHeaders,
-            body: JSON.stringify({
+        return Response.json(
+            {
                 error: "خطأ داخل Netlify Function",
                 details: error.message
-            })
-        };
+            },
+            { status: 500, headers }
+        );
     }
 };
