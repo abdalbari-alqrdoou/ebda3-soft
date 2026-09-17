@@ -1,10 +1,12 @@
 exports.handler = async function (event) {
+    const jsonHeaders = {
+        "Content-Type": "application/json; charset=utf-8"
+    };
+
     if (event.httpMethod !== "POST") {
         return {
             statusCode: 405,
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
+            headers: jsonHeaders,
             body: JSON.stringify({
                 error: "Method Not Allowed"
             })
@@ -17,31 +19,44 @@ exports.handler = async function (event) {
         if (!apiKey) {
             return {
                 statusCode: 500,
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8"
-                },
+                headers: jsonHeaders,
                 body: JSON.stringify({
                     error: "OPENROUTER_API_KEY غير موجود في Netlify"
                 })
             };
         }
 
-        let rawBody = event.body || "{}";
+        let rawBody = event.body || "";
 
         if (event.isBase64Encoded) {
             rawBody = Buffer.from(rawBody, "base64").toString("utf8");
         }
 
-        const body = JSON.parse(rawBody);
+        rawBody = rawBody.trim();
+
+        let body;
+
+        try {
+            body = JSON.parse(rawBody);
+        } catch (parseError) {
+            return {
+                statusCode: 400,
+                headers: jsonHeaders,
+                body: JSON.stringify({
+                    error: "الطلب المرسل ليس JSON صالحًا",
+                    receivedLength: rawBody.length,
+                    receivedStart: rawBody.substring(0, 100),
+                    parseError: parseError.message
+                })
+            };
+        }
 
         if (!Array.isArray(body.messages)) {
             return {
                 statusCode: 400,
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8"
-                },
+                headers: jsonHeaders,
                 body: JSON.stringify({
-                    error: "messages غير موجودة أو غير صحيحة"
+                    error: "messages غير موجودة أو ليست Array"
                 })
             };
         }
@@ -67,18 +82,14 @@ exports.handler = async function (event) {
 
         return {
             statusCode: response.status,
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
+            headers: jsonHeaders,
             body: responseText
         };
 
     } catch (error) {
         return {
             statusCode: 500,
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
+            headers: jsonHeaders,
             body: JSON.stringify({
                 error: "خطأ داخل Netlify Function",
                 details: error.message
