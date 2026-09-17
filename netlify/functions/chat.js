@@ -3,7 +3,7 @@ exports.handler = async function (event) {
         return {
             statusCode: 405,
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json; charset=utf-8"
             },
             body: JSON.stringify({
                 error: "Method Not Allowed"
@@ -18,21 +18,27 @@ exports.handler = async function (event) {
             return {
                 statusCode: 500,
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json; charset=utf-8"
                 },
                 body: JSON.stringify({
-                    error: "OPENROUTER_API_KEY غير موجود في Netlify Environment Variables"
+                    error: "OPENROUTER_API_KEY غير موجود في Netlify"
                 })
             };
         }
 
-        const body = JSON.parse(event.body || "{}");
+        let rawBody = event.body || "{}";
 
-        if (!body.messages || !Array.isArray(body.messages)) {
+        if (event.isBase64Encoded) {
+            rawBody = Buffer.from(rawBody, "base64").toString("utf8");
+        }
+
+        const body = JSON.parse(rawBody);
+
+        if (!Array.isArray(body.messages)) {
             return {
                 statusCode: 400,
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json; charset=utf-8"
                 },
                 body: JSON.stringify({
                     error: "messages غير موجودة أو غير صحيحة"
@@ -62,7 +68,7 @@ exports.handler = async function (event) {
         return {
             statusCode: response.status,
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json; charset=utf-8"
             },
             body: responseText
         };
@@ -71,7 +77,7 @@ exports.handler = async function (event) {
         return {
             statusCode: 500,
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json; charset=utf-8"
             },
             body: JSON.stringify({
                 error: "خطأ داخل Netlify Function",
