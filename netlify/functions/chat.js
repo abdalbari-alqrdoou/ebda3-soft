@@ -52,7 +52,7 @@ export default async (req) => {
                     "Authorization": `Bearer ${apiKey}`,
                     "Content-Type": "application/json",
                     "HTTP-Referer": "https://ebda3-soft776724021.netlify.app/",
-                    "X-Title": "المساعد الذكي - إبداع سوفت"
+                   "X-Title": "Ebda3 Soft AI Assistant"
                 },
                 body: JSON.stringify({
                     model: body.model || "openrouter/free",
