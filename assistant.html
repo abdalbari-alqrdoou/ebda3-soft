@@ -629,6 +629,7 @@ header {
     </div>
 </div>
 
+<script src="ebda3-knowledge.js"></script>
 <script>
 const OPENROUTER_API_KEY = "";
 const OPENROUTER_ENDPOINT = "/.netlify/functions/chat";
@@ -780,6 +781,26 @@ async function sendMessage() {
     try {
         conversationHistory.push({ role: "user", content: text });
         
+        
+        const knowledgeText = `
+معلومات رسمية عن إبداع سوفت:
+
+اسم الشركة: ${EBDA3_KNOWLEDGE.company.name}
+الفرع: ${EBDA3_KNOWLEDGE.company.branch}
+العنوان: ${EBDA3_KNOWLEDGE.company.address}
+رقم التواصل: ${EBDA3_KNOWLEDGE.company.whatsapp}
+البريد الإلكتروني: ${EBDA3_KNOWLEDGE.company.email}
+ساعات العمل: ${EBDA3_KNOWLEDGE.company.workingHours}
+
+الأنظمة المتوفرة:
+${EBDA3_KNOWLEDGE.systems.map((system, index) =>
+    `${index + 1}. ${system.name}: ${system.description}`
+).join("\n")}
+
+قواعد استخدام المعرفة:
+${EBDA3_KNOWLEDGE.rules.map(rule => "- " + rule).join("\n")}
+`;
+
         let systemPrompt = `أنت المساعد الذكي – إبداع سوفت.
 اسم النظام: ${systemTitle}.
 اسم العميل: ${clientInfo.name}.
@@ -793,6 +814,8 @@ async function sendMessage() {
 - تعامل مع التحية مثل هلا وأهلًا وسلام عليكم برد عربي ودود وطبيعي.
 - عند السؤال عن أنظمة إبداع سوفت أو العروض أو الدعم الفني، قدم المساعدة بناءً على المعلومات المتاحة لك.
 - إذا لم تعرف معلومة، أخبر العميل بوضوح أنك تحتاج إلى معلومات إضافية بدل اختلاقها.`;
+        systemPrompt += "\n\n" + knowledgeText;
+
         if (extraInfoList.length > 0) {
             systemPrompt += "\nمعلومات إضافية يمكنك الاستعانة بها:\n" + extraInfoList.join("\n");
         }
